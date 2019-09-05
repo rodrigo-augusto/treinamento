@@ -44,7 +44,7 @@ public class BaseController implements MessageSourceAware {
 
     private <T> ResponseEntity processBusiness(final Supplier<T> supplier, final boolean isReturnElement) {
         try {
-            final var ret = supplier.get();
+            final T ret = supplier.get();
             return isReturnElement ? ResponseEntity.ok(ret) : ResponseEntity.ok().build();
         } catch (final Exception ex) {
             return processException(ex);
@@ -52,7 +52,7 @@ public class BaseController implements MessageSourceAware {
     }
 
     private ResponseEntity processException(final Throwable exception) {
-        final var msg = messageSource.getMessage(
+        final String msg = messageSource.getMessage(
                 processGetMessage(exception)
                 , null
                 , null
