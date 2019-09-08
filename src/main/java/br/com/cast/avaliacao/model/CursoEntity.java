@@ -1,6 +1,8 @@
 package br.com.cast.avaliacao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -30,7 +32,15 @@ public class CursoEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID_CATEGORIA")
-    private CategoriaEntity categoria;
+    private CategoriaEntity categoriaEntity;
+
+    @CreationTimestamp
+    @Column(name = "DAT_CRIACAO", nullable = false)
+    private Calendar dataCriacao;
+
+    @UpdateTimestamp
+    @Column(name = "DAT_ALTERACAO")
+    private Calendar dataAtualizacao;
 
     public Long getId() {
         return id;
@@ -72,12 +82,28 @@ public class CursoEntity {
         this.quantidadeAluno = quantidadeAluno;
     }
 
-    public CategoriaEntity getCategoria() {
-        return categoria;
+    public CategoriaEntity getCategoriaEntity() {
+        return categoriaEntity;
     }
 
-    public void setCategoria(CategoriaEntity catergoria) {
-        this.categoria = catergoria;
+    public void setCategoriaEntity(CategoriaEntity categoriaEntity) {
+        this.categoriaEntity = categoriaEntity;
+    }
+
+    public Calendar getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Calendar dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Calendar getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(Calendar dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 
     @Override
@@ -88,7 +114,9 @@ public class CursoEntity {
                 ", dataInicio=" + dataInicio +
                 ", dataTermino=" + dataTermino +
                 ", quantidadeAluno=" + quantidadeAluno +
-                ", categoria=" + categoria +
+                ", categoriaEntity=" + categoriaEntity +
+                ", dataCriacao=" + dataCriacao +
+                ", dataAtualizacao=" + dataAtualizacao +
                 '}';
     }
 }

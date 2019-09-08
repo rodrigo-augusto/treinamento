@@ -1,7 +1,9 @@
 package br.com.cast.avaliacao.controller;
 
 import br.com.cast.avaliacao.model.CategoriaEntity;
+import br.com.cast.avaliacao.model.dto.CategoriaDTO;
 import br.com.cast.avaliacao.service.CategoriaService;
+import br.com.cast.avaliacao.util.Mapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
@@ -24,7 +28,7 @@ public class CatergoriaController extends BaseController {
     @GetMapping
     @ResponseBody
     @ApiOperation(value = "Recupera todos os recursos")
-    public List<CategoriaEntity> findAll() {
+    public List<CategoriaDTO> findAll() {
         return categoriaService.findAll();
     }
 
@@ -38,15 +42,15 @@ public class CatergoriaController extends BaseController {
     @PostMapping
     @ResponseBody
     @ApiOperation(value = "Insere um recurso")
-    public ResponseEntity create(@Valid @RequestBody CategoriaEntity entity) {
-        return processBusinessWithReturn(() -> categoriaService.save(entity));
+    public ResponseEntity create(@Valid @RequestBody CategoriaDTO dto) {
+        return processBusinessWithReturn(() -> categoriaService.save(dto));
     }
 
     @PatchMapping
     @ResponseBody
     @ApiOperation(value = "Atualiza um recurso")
-    public ResponseEntity update(@Valid @RequestBody CategoriaEntity entity) {
-        return processBusinessWithoutReturn(() -> categoriaService.save(entity));
+    public ResponseEntity update(@Valid @RequestBody CategoriaDTO dto) {
+        return processBusinessWithoutReturn(() -> categoriaService.save(dto));
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,7 @@
 package br.com.cast.avaliacao.controller;
 
 import br.com.cast.avaliacao.model.CursoEntity;
+import br.com.cast.avaliacao.model.dto.CursoDTO;
 import br.com.cast.avaliacao.service.CursoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +30,7 @@ public class CursoController extends BaseController  {
     @GetMapping
     @ResponseBody
     @ApiOperation(value = "Recupera todos os recursos")
-    public List<CursoEntity> findAll() {
+    public List<CursoDTO> findAll() {
         return cursoService.findAll();
     }
 
@@ -43,22 +44,22 @@ public class CursoController extends BaseController  {
     @GetMapping("/assunto/{assunto}")
     @ResponseBody
     @ApiOperation(value = "Recupera recursos com aplicacao de filtros")
-    public List<CursoEntity> findByAssunto(@PathVariable(value = "assunto") String assunto) {
+    public List<CursoDTO> findByAssunto(@PathVariable(value = "assunto") String assunto) {
         return cursoService.findByAssunto(assunto);
     }
 
     @PostMapping
     @ResponseBody
     @ApiOperation(value = "Insere um recurso")
-    public ResponseEntity create(@Valid @RequestBody CursoEntity entity) {
-        return processBusinessWithReturn(() -> cursoService.save(entity));
+    public ResponseEntity create(@Valid @RequestBody CursoDTO dto) {
+        return processBusinessWithReturn(() -> cursoService.save(dto));
     }
 
     @PatchMapping
     @ResponseBody
     @ApiOperation(value = "Atualiza um recursos")
-    public ResponseEntity update(@Valid @RequestBody CursoEntity entity) {
-        return processBusinessWithoutReturn(() -> cursoService.save(entity));
+    public ResponseEntity update(@Valid @RequestBody CursoDTO dto) {
+        return processBusinessWithoutReturn(() -> cursoService.save(dto));
     }
 
     @DeleteMapping("/{id}")

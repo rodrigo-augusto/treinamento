@@ -5,12 +5,13 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import br.com.cast.avaliacao.service.business.BusinessException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import br.com.cast.avaliacao.ui.IMsg;
+import br.com.cast.avaliacao.util.IMsg;
 
 public class BaseController implements MessageSourceAware {
 
@@ -21,8 +22,8 @@ public class BaseController implements MessageSourceAware {
         this.messageSource = messageSource;
     }
 
-    <T> ResponseEntity processNoContent(final T entity) {
-        return entity != null ? ResponseEntity.ok(entity) : ResponseEntity.noContent().build();
+    <T> ResponseEntity processNoContent(final T element) {
+        return element != null ? ResponseEntity.ok(element) : ResponseEntity.noContent().build();
     }
 
     <T> ResponseEntity processBusinessWithReturn(final Supplier<T> supplier) {
@@ -37,8 +38,10 @@ public class BaseController implements MessageSourceAware {
         try {
             runnable.run();
             return ResponseEntity.ok().build();
+        } catch (final BusinessException ex) {
+            return processBusinessException(ex);
         } catch (final Exception ex) {
-            return processException(ex);
+            return getResponseGenericError(ex);
         }
     }
 
@@ -46,15 +49,17 @@ public class BaseController implements MessageSourceAware {
         try {
             final T ret = supplier.get();
             return isReturnElement ? ResponseEntity.ok(ret) : ResponseEntity.ok().build();
+        } catch (final BusinessException ex) {
+            return processBusinessException(ex);
         } catch (final Exception ex) {
-            return processException(ex);
+            return getResponseGenericError(ex);
         }
     }
 
-    private ResponseEntity processException(final Throwable exception) {
+    private ResponseEntity processBusinessException(final BusinessException exception) {
         final String msg = messageSource.getMessage(
                 processGetMessage(exception)
-                , null
+                , exception.getArgs()
                 , null
                 , Locale.getDefault());
         return msg != null ? ResponseEntity.status(HttpStatus.CONFLICT).body(msg) : getResponseGenericError(exception);
