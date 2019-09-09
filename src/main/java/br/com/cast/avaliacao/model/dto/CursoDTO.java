@@ -18,7 +18,7 @@ public class CursoDTO {
 
     private Integer quantidadeAluno;
 
-    private CategoriaDTO categoriaDTO;
+    private CategoriaDTO categoria;
 
     public Long getId() {
         return id;
@@ -60,12 +60,12 @@ public class CursoDTO {
         this.quantidadeAluno = quantidadeAluno;
     }
 
-    public CategoriaDTO getCategoriaDTO() {
-        return categoriaDTO;
+    public CategoriaDTO getCategoria() {
+        return categoria;
     }
 
-    public void setCategoriaDTO(CategoriaDTO categoriaDTO) {
-        this.categoriaDTO = categoriaDTO;
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CursoDTO {
                 ", dataInicio=" + dataInicio +
                 ", dataTermino=" + dataTermino +
                 ", quantidadeAluno=" + quantidadeAluno +
-                ", categoriaDTO=" + categoriaDTO +
+                ", categoria=" + categoria +
                 '}';
     }
 }

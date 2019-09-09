@@ -86,13 +86,13 @@ public class CursoService {
 
     private Function<CursoDTO, CursoEntity> getEntityFromDtoFunction() {
         return (dto) -> Mapper.map(dto, CursoEntity.class, (cursoEntity) -> {
-            cursoEntity.setCategoriaEntity(Mapper.map(dto.getCategoriaDTO(), CategoriaEntity.class));
+            cursoEntity.setCategoriaEntity(Mapper.map(dto.getCategoria(), CategoriaEntity.class));
         });
     }
 
     private Function<CursoEntity, CursoDTO> getDtoFromEntityFunction() {
         return (entity) -> Mapper.map(entity, CursoDTO.class, (dto) -> {
-            dto.setCategoriaDTO(Mapper.map(entity.getCategoriaEntity(), CategoriaDTO.class));
+            dto.setCategoria(Mapper.map(entity.getCategoriaEntity(), CategoriaDTO.class));
         });
     }
 
