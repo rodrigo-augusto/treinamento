@@ -101,7 +101,7 @@ public class CursoService {
                 .check(() -> !StringUtils.isEmpty(entity.getAssunto()), IMsg.INPUT_0002)
                 .check(() -> entity.getDataInicio() != null, IMsg.INPUT_0003)
                 .check(() -> entity.getDataTermino() != null, IMsg.INPUT_0004)
-                .check(() -> entity.getCategoriaEntity() != null, IMsg.INPUT_0005);
+                .check(() -> entity.getCategoriaEntity() != null && entity.getCategoriaEntity().getId() != null, IMsg.INPUT_0005);
     }
 
 }
