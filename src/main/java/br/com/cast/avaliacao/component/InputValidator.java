@@ -1,6 +1,5 @@
 package br.com.cast.avaliacao.component;
 
-import br.com.cast.avaliacao.util.IMsg;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 public class InputValidator implements MessageSourceAware {
 
     private static final String DELIMITER = ", ";
-    public static final Object[] DEFAULT_OBJECTS = {};
+    private static final Object[] DEFAULT_OBJECTS = {};
     private List<String> invalidInputs = new ArrayList<>();
 
     private MessageSource messageSource;
@@ -40,6 +39,7 @@ public class InputValidator implements MessageSourceAware {
                        null,
                         Locale.getDefault()))
                 .collect(Collectors.joining(DELIMITER));
+        invalidInputs = new ArrayList<>();
         return msg.isEmpty() ? DEFAULT_OBJECTS : Collections.singletonList(msg).toArray();
     }
 
