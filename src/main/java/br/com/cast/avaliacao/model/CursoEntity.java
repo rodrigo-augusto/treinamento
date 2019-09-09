@@ -19,11 +19,9 @@ public class CursoEntity {
     @Column(name = "NM_ASSUNTO_CURSO", nullable = false)
     private String assunto;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "DT_INI_CURSO", nullable = false)
     private Calendar dataInicio;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "DT_FIM_CURSO", nullable = false)
     private Calendar dataTermino;
 
