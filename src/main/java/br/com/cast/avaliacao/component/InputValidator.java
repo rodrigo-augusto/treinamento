@@ -36,7 +36,7 @@ public class InputValidator implements MessageSourceAware {
     public Object[] getInvalidInputs() {
         invalidInputs.clear();
         mapInputs.keySet().forEach(supplierKey -> {
-            if (supplierKey.get()) {
+            if (!supplierKey.get()) {
                 invalidInputs.add(mapInputs.get(supplierKey));
             }
         });
