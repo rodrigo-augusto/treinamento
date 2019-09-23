@@ -5,12 +5,12 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import br.com.cast.avaliacao.service.business.BusinessException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import br.com.cast.avaliacao.service.business.BusinessException;
 import br.com.cast.avaliacao.util.IMsg;
 
 public class BaseController implements MessageSourceAware {
@@ -34,7 +34,7 @@ public class BaseController implements MessageSourceAware {
         return processBusiness(supplier, Boolean.FALSE);
     }
 
-    <T> ResponseEntity processBusinessVoid(final Runnable runnable) {
+    ResponseEntity processBusinessVoid(final Runnable runnable) {
         try {
             runnable.run();
             return ResponseEntity.ok().build();
@@ -58,10 +58,7 @@ public class BaseController implements MessageSourceAware {
 
     private ResponseEntity processBusinessException(final BusinessException exception) {
         final String msg = messageSource.getMessage(
-                processGetMessage(exception)
-                , exception.getArgs()
-                , null
-                , Locale.getDefault());
+                processGetMessage(exception), exception.getArgs(), null, Locale.getDefault());
         return msg != null ? ResponseEntity.status(HttpStatus.CONFLICT).body(msg) : getResponseGenericError(exception);
     }
 
