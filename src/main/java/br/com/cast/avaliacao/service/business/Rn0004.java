@@ -22,7 +22,7 @@ public class Rn0004 {
 
         final boolean isSameEntity = conflitos
                 .stream()
-                .anyMatch(e -> e.getId().equals(entity.getId()));
+                .anyMatch(e -> e.getId().equals(entity.getId()) && conflitos.size() == 1);
 
         if (!isSameEntity && !conflitos.isEmpty()) {
             throw new BusinessException(IMsg.MSG_0005);
