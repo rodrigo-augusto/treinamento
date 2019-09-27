@@ -2,11 +2,12 @@ package br.com.cast.avaliacao.service.business;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.com.cast.avaliacao.model.CursoEntity;
 import br.com.cast.avaliacao.repository.CursoRepository;
 import br.com.cast.avaliacao.util.IMsg;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class Rn0004 {
@@ -19,11 +20,9 @@ public class Rn0004 {
                 entity.getDataInicio(),
                 entity.getDataTermino());
 
-        final boolean isSameEntity = conflitos.stream()
-                .filter(e -> e.getId().equals(entity.getId()))
-                .findAny()
-                .map(e -> conflitos.size() == 1)
-                .orElse(Boolean.FALSE);
+        final boolean isSameEntity = conflitos
+                .stream()
+                .anyMatch(e -> e.getId().equals(entity.getId()));
 
         if (!isSameEntity && !conflitos.isEmpty()) {
             throw new BusinessException(IMsg.MSG_0005);
